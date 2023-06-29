@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 
+// sqlite3
+const db = require('better-sqlite3')('restaurant.db');
+
+db.prepare('CREATE TABLE IF NOT EXISTS Restaurant (id INTEGER PRIMARY KEY, name TEXT NOT NULL, adresse TEXT NOT NULL, kategorie TEXT NOT NULL)').run();
+
+
+
 // connection details
 const port = 3000;
 const hostname = 'localhost';
@@ -49,9 +56,11 @@ function delRestaurant(name) {
 
 /* API ENDPUNKTE */
 // alle restaurants abfragen
-
-    res.send(restaurants);
-
+app.get('/restaurants', (_, res) => {
+    const db_restaurant = db.prepare('SELECT * FROM Restaurant' ).all()
+    
+    res.send(db_restaurant);
+});
 // bestimmtes restaurant abfragen
 app.get('/restaurant/:name', (req, res) => {
     // variable fuer suchergebnis anlegen (undefined)
