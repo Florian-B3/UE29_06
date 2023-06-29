@@ -49,9 +49,8 @@ function delRestaurant(name) {
 
 /* API ENDPUNKTE */
 // alle restaurants abfragen
-app.get('/restaurants', (_, res) => {
+
     res.send(restaurants);
-});
 
 // bestimmtes restaurant abfragen
 app.get('/restaurant/:name', (req, res) => {
